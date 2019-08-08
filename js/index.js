@@ -1,5 +1,3 @@
-
-
 // for (let i=0; i<=5; i++){
 //     const para = document.createElement('p');
 //     para.textContent = i + '. Sample text';
@@ -27,35 +25,75 @@
 const clock = document.querySelector('.clock');
 // const textTime = document.querySelector(' - Lviv local time');
 // clock.appendChild(textTime);
-// clock.addEventListener(mousee, textTimeAppear);  
+// clock.addEventListener(mousein, textTimeAppear);  
 //     function textTimeAppear(e) {
-        
-setInterval(  
-    () => clock.innerText = (new Date()).toLocaleTimeString(), 
-1000); 
+
+setInterval(
+    () => clock.innerText = (new Date()).toLocaleTimeString(),
+    1000);
 
 
 //Calculator
+// + 1-to clear display after errror notice by click on any other btn of digitsOper
+// + 2-to add clearLastEl button
+// 3-to change to opposite operator by click on it if the last element is operator.
+// 4-to add memory button
+// 5-to deny add '0' when the last elem == '0'
+// 6-to fix % funtion  
+// 7-to fix multiple usage of '.'
 
 const display = document.querySelector('.display');
 
-// const digitsOper = document.querySelectorAll('.digits button, .operations button');// all buttons are assigned to the arr digitsOper[]
-// digitsOper.forEach(digit => digit.addEventListener ('click', digitOperPressed));
-$('.digits button, .operations button').click(digitOperPressed);
+const lastChar = display.value.slice(-1);// or .replace(/.$/," ") or string.substring (from, to)
+const errorMessage = 'You can`t divide by "0"!';
+const operButtons = document.querySelectorAll('.operations button');
+operButtons.forEach(digit => digit.addEventListener('click', changeOperButtons));
 
-function digitOperPressed (e) {
-    e.preventDefault();//prevent from sending form to server
-    display.value += e.target.innerText;//target is the clicked button 
+function changeOperButtons(e){
+    e.preventDefault();
+    if (display.value.slice(-1).includes(operButtons.innerText)) {
+        display.value = display.value.slice(0, -1) + e.target.innerText; 
+    }
 } 
 
-const equal = document.querySelector('.eq');
+function clearDisplay(display) {
+    e.preventDefault();
+    display.value = '';
+}
+
+const digitsOper = document.querySelectorAll('.digits button, .operations button'); // all buttons are assigned to the arr digitsOper[]
+digitsOper.forEach(digit => digit.addEventListener('click', digitOperPressed));
+
+function digitOperPressed(e) {
+    e.preventDefault(); //prevent from sending form to server
+    if (display.value !== errorMessage){ 
+    display.value += e.target.innerText;
+    } 
+    else {
+        display.value = e.target.innerText; //target is the clicked button 
+    }
+}
+
+// digitsOper.forEach(digit => digit.addEventListener('click', digitOperPressedAfterError));
+
+// function digitOperPressedAfterError(e) {
+//     e.preventDefault();
+//     while (display.value == 'You can`t divide by "0"!')
+//         clearDisplay;
+// }
+
+
+
+
+
+const equal = document.querySelector('.equalBtn');
 equal.addEventListener('click', equalPressed);
 
-function equalPressed(e){
+function equalPressed(e) {
     e.preventDefault();
-    eval(display.value) === Infinity ? 
-    alert('You can`t divide by "0"!') : 
-    display.value = eval(display.value);
+    eval(display.value) !== Infinity ?
+        display.value = eval(display.value) :
+        display.value = errorMessage;
 }
 
 const clearC = document.querySelector('.clearC');
@@ -63,27 +101,23 @@ clearC.addEventListener('click', clearPressed);
 
 function clearPressed(e) {
     e.preventDefault();
-    display.value = display.value = '';
+    display.value = '';
+}
+
+const clearElem = document.querySelector('.clearEl');
+clearElem.addEventListener('click', clearEleemPressed);
+
+function clearEleemPressed (e) {
+    e.preventDefault();
+    display.value = display.value.slice(0, display.value.length-1) ;
 }
 
 const percent = document.querySelector('.percent');
 percent.addEventListener('click', percentPressed);
 
-function percentPressed (e) {
+function percentPressed(e) {
     e.preventDefault();
-    let previousVal = eval(display.value) 
-    display.value = (eval(display.value)) / 100;
+    display.value.scile(-2, -1) === operations.button.innerText ?
+        display.value = eval(display.value.scile(-1) / 100) :
+        display.value = (eval(display.value)) / 100;
 }
-
-
-
-
-
-// document.querySelector('.click-me')
-//     .addEventListener('click', showAlert);
-//     function showAlert () {
-//         alert('Button is clicked!');
-//     } 
-
-
-   
