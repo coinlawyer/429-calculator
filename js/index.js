@@ -10,11 +10,29 @@
 // sect.appendChild(linkPara.cloneNode(true));
 // //sect.removeChild(linkPara);
 
-Clock
+//Clock
+
+// new HoverIntent({
+//   elem,
+//   over() {
+//     tooltip.style.left = elem.getBoundingClientRect().left + 'px';
+//     tooltip.style.top = elem.getBoundingClientRect().bottom + 5 + 'px';
+//     document.body.append(tooltip);
+//   },
+//   out() {
+//     tooltip.remove();
+//   }
+// });
+
 const clock = document.querySelector('.clock');
+// const textTime = document.querySelector(' - Lviv local time');
+// clock.appendChild(textTime);
+// clock.addEventListener(mousee, textTimeAppear);  
+//     function textTimeAppear(e) {
+        
 setInterval(  
-    () => clock.innerText =( (new Date()).toLocaleTimeString(), 
-1000) + ' Lviv Local Time');
+    () => clock.innerText = (new Date()).toLocaleTimeString(), 
+1000); 
 
 
 //Calculator
@@ -35,6 +53,8 @@ equal.addEventListener('click', equalPressed);
 
 function equalPressed(e){
     e.preventDefault();
+    eval(display.value) === Infinity ? 
+    alert('You can`t divide by "0"!') : 
     display.value = eval(display.value);
 }
 
@@ -59,11 +79,11 @@ function percentPressed (e) {
 
 
 
-document.querySelector('.click-me')
-    .addEventListener('click', showAlert);
-    function showAlert () {
-        alert('Button is clicked!');
-    } 
+// document.querySelector('.click-me')
+//     .addEventListener('click', showAlert);
+//     function showAlert () {
+//         alert('Button is clicked!');
+//     } 
 
 
    
