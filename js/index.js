@@ -36,7 +36,7 @@ setInterval(
 //Calculator
 // + 1-to clear display after errror notice by click on any other btn of digitsOper
 // + 2-to add clearLastEl button
-// 3-to change to opposite operator by click on it if the last element is operator.
+// + 3-to change to opposite operator by click on it if the last element is operator.
 // 4-to add memory button
 // 5-to deny add '0' when the last elem == '0'
 // 6-to fix % funtion  
@@ -44,17 +44,27 @@ setInterval(
 
 const display = document.querySelector('.display');
 
-const lastChar = display.value.slice(-1);// or .replace(/.$/," ") or string.substring (from, to)
+
 const errorMessage = 'You can`t divide by "0"!';
 const operButtons = document.querySelectorAll('.operations button');
 operButtons.forEach(digit => digit.addEventListener('click', changeOperButtons));
 
+
+
 function changeOperButtons(e){
+    const lastChar = display.value.slice(-1);// or .replace(/.$/," ") or string.substring (from, to)
     e.preventDefault();
-    if (display.value.slice(-1).includes(operButtons.innerText)) {
-        display.value = display.value.slice(0, -1) + e.target.innerText; 
+        for (let i=0; i<operButtons.length; i++) {
+            if (operButtons[i].innerText.includes(lastChar)) {
+            display.value = display.value.slice(0, -1); 
+        }
     }
-} 
+}
+    // Array.includes = function() {
+    //     let [first, ...rest] = arguments;
+    //     return Array.prototype.includes.apply(first, rest);
+    //   }
+// } 
 
 function clearDisplay(display) {
     e.preventDefault();
@@ -66,25 +76,26 @@ digitsOper.forEach(digit => digit.addEventListener('click', digitOperPressed));
 
 function digitOperPressed(e) {
     e.preventDefault(); //prevent from sending form to server
+    
+    const lastChar = display.value.slice(-1);// or .replace(/.$/," ") or string.substring (from, to)
+    
+    const IsOper = function(e){
+        for (let i=0; i<operButtons.length; i++) {
+            if (operButtons[i].innerText.includes(lastChar)) {
+                return IsOper = true;
+            }
+        }
+    }
     if (display.value !== errorMessage){ 
-    display.value += e.target.innerText;
+        display.value += e.target.innerText;
     } 
+    else if (isOper(lastChar)&&isOper(e.target.innerText)) {
+            display.value = display.value(value.length - 1);
+    }
     else {
         display.value = e.target.innerText; //target is the clicked button 
     }
 }
-
-// digitsOper.forEach(digit => digit.addEventListener('click', digitOperPressedAfterError));
-
-// function digitOperPressedAfterError(e) {
-//     e.preventDefault();
-//     while (display.value == 'You can`t divide by "0"!')
-//         clearDisplay;
-// }
-
-
-
-
 
 const equal = document.querySelector('.equalBtn');
 equal.addEventListener('click', equalPressed);
@@ -121,3 +132,4 @@ function percentPressed(e) {
         display.value = eval(display.value.scile(-1) / 100) :
         display.value = (eval(display.value)) / 100;
 }
+
